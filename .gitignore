@@ -427,3 +427,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Continue Yaml files for Visual Studio Code
+.continue/
+
+# VS Code files
+.vscode/

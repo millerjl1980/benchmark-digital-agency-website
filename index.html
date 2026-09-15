@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benchmark Digital Agency</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #111;
+      --text-color: #eee;
+      --accent: #3fa9f5;
+      --heading-font: 'Playfair Display', serif;
+      --body-font: 'Open Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--body-font);
+      line-height: 1.6;
+    }
+    h1, h2, h3, h4 {
+      font-family: var(--heading-font);
+      margin-bottom: .5rem;
+    }
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    a { color: var(--accent); text-decoration:none; }
+    .container {
+      width: min(90%, 1200px);
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+    section { padding: 4rem 0; }
+    .hero { text-align: center; }
+    .hero h1 { font-size: 3.5rem; color: var(--accent); }
+    .hero p { max-width: 800px; margin: 1rem auto; font-size: 1.2rem; }
+    .grid {
+      display: grid;
+      gap: 2rem;
+    }
+    .three-cols { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .four-cols { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+    .card {
+      background: rgba(255,255,255,.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .card h3 { margin-top: .5rem; }
+    .partners, .contact { text-align: center; font-size: 1.1rem; }
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      font-size: .9rem;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+    @media (max-width:600px) {
+      h1 { font-size: 2.5rem; }
+      .hero p { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero container">
+    <h1>Benchmark Digital Agency</h1>
+    <p>Benchmark Digital Agency is a performance marketing publisher. We drive paid search traffic to comparison and review pages we build and own.</p>
+  </header>
+
+  <section class="what-we-do container">
+    <h2>What we do</h2>
+    <div class="grid three-cols">
+      <div class="card">
+        <h3>Paid Search</h3>
+        <p>We buy Google Ads traffic.</p>
+      </div>
+      <div class="card">
+        <h3>Owned Pages</h3>
+        <p>We build and run our own review and comparison pages.</p>
+      </div>
+      <div class="card">
+        <h3>Performance</h3>
+        <p>We’re paid on results, not retainers.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="categories container">
+    <h2>Categories</h2>
+    <div class="grid four-cols">
+      <div class="card"><h3>Home</h3></div>
+      <div class="card"><h3>Kitchen</h3></div>
+      <div class="card"><h3>Health &amp; Wellness</h3></div>
+      <div class="card"><h3>Outdoors</h3></div>
+    </div>
+  </section>
+
+  <section class="partners container">
+    <h2>Partners</h2>
+    <p>We buy our own traffic, send it to pages we own, and promote partner offers on a performance basis.</p>
+  </section>
+
+  <section class="contact container">
+    <h2>Contact</h2>
+    <p><a href="mailto:info@benchmarkdigital.agency">info@benchmarkdigital.agency</a></p>
+  </section>
+
+  <footer>
+    © Benchmark Digital Agency
+  </footer>
+</body>
+</html>
