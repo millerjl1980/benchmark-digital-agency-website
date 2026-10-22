@@ -1,0 +1,90 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import PlanCard from '../../components/PlanCard.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import data from '../../data/industries.json';
+import { fill, getPlan, boltOns, boltOnPrice, exclusivity } from '../../lib/plans';
+import { faqSchema, type FaqGroup } from '../../lib/faq';
+
+export function getStaticPaths() {
+  return data.industries.map((industry) => ({ params: { slug: industry.slug }, props: { industry } }));
+}
+const { industry } = Astro.props;
+const fit = getPlan(industry.planFit.plan);
+const alt = getPlan(industry.alsoConsider.plan);
+const lsa = boltOns.find((b) => b.id === 'lsa')!;
+const faqKey = industry.faqKey as FaqGroup;
+---
+<Base title={industry.title} description={industry.metaDescription} schema={[faqSchema(faqKey)]}>
+  <PageHero eyebrow={industry.name} title={industry.headline} lead={industry.intro}>
+    <ul class="trades">{industry.trades.map((t) => <li>{t}</li>)}</ul>
+  </PageHero>
+
+  <section class="section" aria-labelledby="search-h">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">What your customers search for</p>
+        <h2 id="search-h">The searches that turn into calls</h2>
+        <p class="muted">{industry.searchNote}</p>
+      </div>
+      <ul class="searches" aria-labelledby="search-h">
+        {industry.searches.map((s) => <li><span aria-hidden="true">⌕</span> {s}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="fit-h">
+    <div class="wrap split fit">
+      <div>
+        <p class="eyebrow">Which plan usually fits</p>
+        <h2 id="fit-h">Most {industry.name.toLowerCase()} businesses start with {fit.name}.</h2>
+        <p class="lead">{fill(industry.planFit.why)}</p>
+        <p>{fill(industry.alsoConsider.why)} <a class="arrow-link" href={`/plans#plan-${alt.id}`}>See {alt.name}</a></p>
+        <div class="note">
+          <p><strong>Do you need the lead-nurturing email? {industry.nurture.applies}.</strong> {fill(industry.nurture.text)}</p>
+        </div>
+      </div>
+      <PlanCard plan={fit} />
+    </div>
+  </section>
+
+  {industry.lsa && (
+    <section class="section" aria-labelledby="lsa-h">
+      <div class="wrap narrow">
+        <p class="eyebrow">Bolt-on</p>
+        <h2 id="lsa-h">Local Service Ads</h2>
+        <p class="lead">
+          Local Service Ads are the "Google Guaranteed" listings that sit above the map pack. You pay per lead, not per click,
+          and they work well alongside the free map rankings we're building.
+        </p>
+        <p><strong>{lsa.name}:</strong> {boltOnPrice(lsa)}.</p>
+        <p class="muted small">Google has to verify your license and insurance first. We'll help you through it.</p>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--tight" aria-label="Category exclusivity">
+    <div class="wrap narrow">
+      <p class="note"><strong>One per category.</strong> {exclusivity} Ask early if you want your spot held.</p>
+    </div>
+  </section>
+
+  <Faq group={faqKey} heading={`${industry.name} questions`} />
+  <CtaBand />
+</Base>
+
+<style>
+  .trades { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 1.5rem 0 0; }
+  .trades li { margin: 0; padding: 0.35rem 0.85rem; border-radius: 999px; background: var(--ink); color: var(--on-ink); font-weight: 600; font-size: 0.95rem; }
+  .searches { list-style: none; padding: 0; display: grid; gap: 0.6rem; }
+  .searches li {
+    margin: 0; padding: 0.75rem 1rem; background: var(--card);
+    border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow);
+    font-weight: 600;
+  }
+  .searches span { color: var(--brass-text); margin-right: 0.3rem; }
+  .fit { align-items: start; }
+  .fit :global(.plan) { margin-top: 1rem; }
+</style>

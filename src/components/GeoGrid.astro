@@ -1,0 +1,107 @@
+---
+/**
+ * GeoGrid illustration: a 12×12 grid of search points around a business.
+ * Dots fill from grey to green outward from the business, the way map-pack
+ * coverage grows. Pure SVG + CSS; the animation is skipped for reduced motion.
+ * Deterministic, illustrative data only (never real client results).
+ */
+interface Props {
+  size?: number;
+  /** 0..1, how far coverage has spread in the final state */
+  coverage?: number;
+  animate?: boolean;
+  showRing?: boolean;
+  label?: string;
+  class?: string;
+}
+const {
+  size = 12,
+  coverage = 0.55,
+  animate = true,
+  showRing = false,
+  label = 'Illustration of a GeoGrid scan: a 12 by 12 grid of dots around a business. Dots near the business are green, meaning it ranks in the map pack there; dots farther out are grey.',
+  class: className,
+} = Astro.props;
+
+const gap = 30;
+const pad = 20;
+const dim = pad * 2 + gap * (size - 1);
+const c = (size - 1) / 2;
+// Business sits a little off-center, like a real shop would
+const bx = c - 0.6;
+const by = c + 0.4;
+const maxD = Math.hypot(c + 1, c + 1);
+
+// Small deterministic noise so the edge of coverage looks organic
+const noise = (x: number, y: number) => {
+  const s = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+  return s - Math.floor(s) - 0.5;
+};
+
+type Dot = { x: number; y: number; level: 'top' | 'near' | 'off'; delay: number };
+const dots: Dot[] = [];
+for (let y = 0; y < size; y++) {
+  for (let x = 0; x < size; x++) {
+    const d = Math.hypot(x - bx, y - by) / maxD + noise(x, y) * 0.16;
+    const level = d < coverage * 0.72 ? 'top' : d < coverage ? 'near' : 'off';
+    dots.push({ x: pad + x * gap, y: pad + y * gap, level, delay: Math.max(0, d) * 2.4 });
+  }
+}
+const px = pad + bx * gap;
+const py = pad + by * gap;
+const ringR = coverage * maxD * gap;
+---
+<figure class:list={['geogrid', className, { animate }]}>
+  <svg viewBox={`0 0 ${dim} ${dim}`} width={dim} height={dim} role="img" aria-label={label}>
+    {showRing && (
+      <circle class="ring" cx={px} cy={py} r={ringR} fill="none" stroke-dasharray="6 6" />
+    )}
+    {dots.map((d) => (
+      <circle
+        class={`dot ${d.level}`}
+        cx={d.x}
+        cy={d.y}
+        r="9"
+        style={`--d:${d.delay.toFixed(2)}s`}
+      />
+    ))}
+    <g class="pin" transform={`translate(${px} ${py})`}>
+      <circle r="13" fill="#c9973f" stroke="#101c2e" stroke-width="3" />
+      <path d="M-6 -1h12" stroke="#101c2e" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M0 -0.5l-3.5 6h7z" fill="#101c2e" />
+    </g>
+  </svg>
+  <figcaption>
+    <span><i class="k top"></i>Top 3 (map pack)</span>
+    <span><i class="k near"></i>Page 1</span>
+    <span><i class="k off"></i>Not showing</span>
+  </figcaption>
+</figure>
+
+<style>
+  .geogrid { margin: 0; }
+  svg { width: 100%; height: auto; }
+  .dot { fill: var(--dot-off); }
+  .dot.top { fill: var(--rank); }
+  .dot.near { fill: var(--rank-soft); }
+  .ring { stroke: var(--brass); stroke-width: 2; }
+  figcaption {
+    display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; justify-content: center;
+    margin-top: 0.9rem; font-size: 0.88rem; color: inherit; opacity: 0.9;
+  }
+  figcaption span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .k { width: 0.8rem; height: 0.8rem; border-radius: 50%; display: inline-block; background: var(--dot-off); }
+  .k.top { background: var(--rank); }
+  .k.near { background: var(--rank-soft); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .animate .dot.top, .animate .dot.near {
+      animation: fill-in 0.6s ease-out both;
+      animation-delay: calc(var(--d) + 0.3s);
+    }
+    .animate .dot.top { animation-name: fill-top; }
+    .animate .dot.near { animation-name: fill-near; }
+  }
+  @keyframes fill-top { from { fill: var(--dot-off); } to { fill: var(--rank); } }
+  @keyframes fill-near { from { fill: var(--dot-off); } to { fill: var(--rank-soft); } }
+</style>

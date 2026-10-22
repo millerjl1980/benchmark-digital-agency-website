@@ -1,0 +1,42 @@
+---
+/** Compact Free → Leads & Loyalty ladder. Prices come from src/data/plans.json. */
+import { plans, monthlyLabel, setupLabel } from '../lib/plans';
+---
+<ol class="ladder" aria-label="Plans from free to full system">
+  {plans.map((p, i) => (
+    <li class:list={{ rec: p.recommended }} style={`--step:${i}`}>
+      <a href={p.id === 'free' ? '/free-scan' : `/plans#plan-${p.id}`}>
+        <span class="step">{i === 0 ? 'Start' : `Step ${i}`}</span>
+        <span class="name">{p.name}{p.recommended && <span class="tag">Most pick this</span>}</span>
+        <span class="price">{p.monthly === 0 ? 'Free' : monthlyLabel(p)}</span>
+        <span class="setup">{p.monthly === 0 ? 'No catch' : setupLabel(p)}</span>
+      </a>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .ladder { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+  .ladder li { margin: 0; }
+  .ladder a {
+    display: grid; grid-template-columns: 1fr auto; gap: 0.1rem 1rem; align-items: baseline;
+    padding: 0.9rem 1.1rem; text-decoration: none;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    border-left: 6px solid color-mix(in srgb, var(--brass) calc(20% + var(--step) * 20%), var(--line));
+  }
+  .ladder a:hover { border-color: var(--brass); }
+  .step { grid-column: 1 / -1; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass-text); }
+  .name { font: 600 1.15rem/1.25 var(--font-head); }
+  .price { font: 700 1.15rem var(--font-head); text-align: right; }
+  .setup { grid-column: 2; font-size: 0.85rem; color: var(--ink-soft); text-align: right; }
+  .tag { display: inline-block; margin-left: 0.5rem; font: 700 0.72rem var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; background: var(--ink); color: var(--brass-light); padding: 0.15rem 0.5rem; border-radius: 999px; vertical-align: middle; }
+  .rec a { border-color: var(--brass); border-width: 2px 2px 2px 6px; }
+  @media (min-width: 64rem) {
+    .ladder { grid-template-columns: repeat(5, 1fr); align-items: end; }
+    .ladder li { padding-top: calc((4 - var(--step)) * 1.1rem); }
+    .ladder a { grid-template-columns: 1fr; border-left-width: 1px; border-top: 6px solid color-mix(in srgb, var(--brass) calc(20% + var(--step) * 20%), var(--line)); min-height: 9.5rem; align-content: start; }
+    .price, .setup { text-align: left; grid-column: 1; }
+    .rec a { border-width: 6px 2px 2px; }
+    .tag { display: block; width: fit-content; margin: 0.35rem 0 0; }
+  }
+</style>

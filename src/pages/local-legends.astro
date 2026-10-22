@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../config/site';
+---
+<Base
+  title="Local Legends"
+  description="Local Legends is the Best of Franklin Township community feature for south-side businesses that do good work. Features are never sold."
+>
+  <PageHero
+    eyebrow="Local Legends"
+    title="Best of Franklin Township"
+    lead="A community site that tells the stories of the local businesses neighbors already trust."
+  />
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <h2>What it is</h2>
+        <p>
+          <a href={site.links.localLegends} rel="noopener">Best of Franklin Township</a> highlights local businesses on the south side:
+          who runs them, what they do well, and why their customers keep coming back.
+        </p>
+        <p>
+          Local Legends features are part of our free offer. They give neighbors a reason to know your name, and give you
+          a genuine local link and a story you can share.
+        </p>
+        <a class="btn btn--primary" href={site.links.localLegends} rel="noopener">Visit bestoffranklintownship.com</a>
+      </div>
+      <div class="card never">
+        <p class="eyebrow">Our rule</p>
+        <h2 class="h3">Features are never sold.</h2>
+        <p>Not to clients, not to advertisers, not to anyone. A business gets featured for the work it does, not because it paid or signed up for a plan.</p>
+        <p class="muted small">Paying clients get no special treatment on Best of Franklin Township. That's the only way it stays worth reading.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section section--alt">
+    <div class="wrap narrow center">
+      <h2>Know a business that deserves a feature?</h2>
+      <p class="lead">Tell us about it. It doesn't have to be yours.</p>
+      <a class="btn btn--dark" href="/contact">Suggest a Local Legend</a>
+    </div>
+  </section>
+</Base>
+<style>
+  .never { border: 2px solid var(--brass); }
+  .h3 { font-size: 1.7rem; }
+</style>

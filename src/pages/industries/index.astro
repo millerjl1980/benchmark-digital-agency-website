@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import data from '../../data/industries.json';
+---
+<Base title="Industries we serve" description="Local marketing for home services (roofing, HVAC, plumbing, lawn care, pest control) and pet services (groomers, boarding, trainers, vets) on the south side of Indianapolis.">
+  <PageHero eyebrow="Industries" title="Who we work with" lead="Small service businesses, 1 to 10 people, on the south side of Indianapolis." />
+  <section class="section">
+    <div class="wrap grid grid--2">
+      {data.industries.map((ind) => (
+        <a class="card" href={`/industries/${ind.slug}`} style="text-decoration:none">
+          <h2 class="h3">{ind.name}</h2>
+          <p>{ind.trades.join(' · ')}</p>
+          <span class="arrow-link">Read more</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>
+<style>.h3 { font-size: 1.5rem; }</style>

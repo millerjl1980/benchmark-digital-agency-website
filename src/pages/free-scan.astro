@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import LeadForm from '../components/LeadForm.astro';
+import GeoGrid from '../components/GeoGrid.astro';
+import { site } from '../config/site';
+---
+<Base
+  title="Free Google Maps scan"
+  description="See where your business shows up on Google Maps across your service area. Free GeoGrid snapshot, quick profile review and a free review app for south-side Indianapolis service businesses."
+>
+  <PageHero
+    eyebrow="Free, no obligation"
+    title="Get your free Google Maps scan"
+    lead="Find out where you show up when neighbors search for what you do, and what's holding you back."
+  />
+
+  <section class="section">
+    <div class="wrap split scan">
+      <div class="stack">
+        <h2>What you get</h2>
+        <div class="card">
+          <h3>A GeoGrid snapshot</h3>
+          <p>A map of 144 points around your business showing where you rank in the Google Maps pack and where you don't.</p>
+          <div class="mini"><GeoGrid animate={false} coverage={0.35} /></div>
+        </div>
+        <div class="card">
+          <h3>A quick profile review</h3>
+          <p>We look over your Google Business Profile and note the fixes that matter most. Want them done? Book the free 15-minute Zoom and we'll fix them together.</p>
+        </div>
+        <div class="card">
+          <h3>The free review app</h3>
+          <p>Access to <a href="/review-app">Thanks and Rate</a>, a simple way to ask happy customers for a Google review by text or QR code.</p>
+        </div>
+        <p class="muted small">{site.owner} usually replies {site.responseTime}. No automated sales sequence.</p>
+      </div>
+      <div class="card form-card" id="form">
+        <h2 class="h3">Request your scan</h2>
+        <p class="muted">Takes about two minutes.</p>
+        <LeadForm source="free-scan" id="scan-form" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .scan { align-items: start; }
+  .mini { max-width: 15rem; margin: 1rem auto 0; font-size: 0.8rem; }
+  .form-card { position: relative; }
+  @media (min-width: 56rem) { .form-card { position: sticky; top: 5.5rem; } }
+  .h3 { font-size: 1.6rem; margin-bottom: 0.25rem; }
+</style>

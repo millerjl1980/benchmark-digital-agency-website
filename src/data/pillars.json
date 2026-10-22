@@ -1,0 +1,51 @@
+[
+  {
+    "id": "google",
+    "name": "Google Business Profile",
+    "line": "The profile that puts you in the map pack. We optimize it, post weekly and answer every review.",
+    "detail": "Your Google Business Profile is the single biggest factor in whether you show up on the map. Most owners set it up once and never touch it again. Google notices.",
+    "items": [
+      "Categories, services, hours and service area set up correctly",
+      "Weekly posts with real photos of your work",
+      "Every review answered, good or bad",
+      "Review invitations sent after each job, manually or automatically depending on plan",
+      "Questions and answers kept current"
+    ]
+  },
+  {
+    "id": "website",
+    "name": "Website",
+    "line": "A fast, plain-spoken site with a page for every service and town you cover.",
+    "detail": "Google looks at your website to decide whether you're relevant to a search. One home page can't rank for \"furnace repair in Beech Grove\" and \"AC install in Greenwood\" at the same time. Pages for each service and area can.",
+    "items": [
+      "Fast on phones, with your number one tap away",
+      "Service pages and location pages added every month",
+      "Online booking on Growth Builder and above",
+      "Hosting, updates and security handled",
+      "Citations and local backlinks that tell Google you're a real local business"
+    ]
+  },
+  {
+    "id": "facebook",
+    "name": "Facebook",
+    "line": "Regular posts so neighbors who check your page see a business that's open and active.",
+    "detail": "People check Facebook to see if you're still around and what your work looks like. A page with the last post from 2021 costs you calls. We keep it current.",
+    "items": [
+      "Monthly or weekly posts, depending on plan",
+      "Your best reviews and job photos reshared",
+      "Seasonal reminders (furnace tune-ups, spring grooming, gutter season)"
+    ]
+  },
+  {
+    "id": "email",
+    "name": "Email",
+    "line": "Follow-up that turns one job into a regular customer and a five-star review.",
+    "detail": "The cheapest customer to win is the one you already served. Email keeps you in front of them, brings them back on schedule and asks for the review at the right moment.",
+    "items": [
+      "Lead magnet and nurture emails for jobs people research first",
+      "Loyalty and reminder emails for repeat customers",
+      "Review requests timed after the job",
+      "Skip nurturing if your work is emergency or walk-in, and save on setup"
+    ]
+  }
+]

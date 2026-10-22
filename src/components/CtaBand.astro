@@ -1,0 +1,18 @@
+---
+interface Props { heading?: string; text?: string }
+const {
+  heading = 'Find out where you show up today.',
+  text = "The free Google Maps scan shows where you rank across your service area, mile by mile. It takes two minutes to ask for, and you're under no obligation.",
+} = Astro.props;
+---
+<section class="section section--ink cta-band">
+  <div class="wrap narrow center">
+    <p class="eyebrow" style="justify-content:center">Free, no strings</p>
+    <h2>{heading}</h2>
+    <p class="lead">{text}</p>
+    <div class="btn-row" style="justify-content:center">
+      <a class="btn btn--primary" href="/free-scan">Get your free Google Maps scan</a>
+      <a class="btn btn--ghost" href="/plans">See plans</a>
+    </div>
+  </div>
+</section>

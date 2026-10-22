@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../config/site';
+---
+<Base
+  title="Free review app"
+  description="Thanks and Rate is a free review app that makes it easy for your customers to leave a Google review by text, email or QR code."
+>
+  <PageHero
+    eyebrow="Free review app"
+    title="Make asking for reviews the easy part of the job."
+    lead="Most happy customers would leave a review. They just don't get around to it. Thanks and Rate puts the ask on your phone, so you can send it before you leave the driveway."
+  />
+  <section class="section">
+    <div class="wrap grid grid--3">
+      <div class="card">
+        <span class="num">1</span>
+        <h3>Your own review page</h3>
+        <p>A simple page with your name on it that opens Google's review form in one tap.</p>
+      </div>
+      <div class="card">
+        <span class="num">2</span>
+        <h3>Send by text, email or QR</h3>
+        <p>Text it, email it, or hold up the QR code at the counter. A friendly message is already written for you.</p>
+      </div>
+      <div class="card">
+        <span class="num">3</span>
+        <h3>Free, and you keep it</h3>
+        <p>It's part of the free offer. Become a client later or don't. The app is yours either way.</p>
+      </div>
+    </div>
+    <div class="wrap center" style="margin-top:2.5rem">
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary" href={site.links.reviewApp} rel="noopener">Visit thanksandrate.com</a>
+        <a class="btn btn--ghost" href="/free-scan">Get it with your free scan</a>
+      </div>
+      <p class="small muted" style="margin-top:1rem">Thanks and Rate sends every customer straight to Google, as Google's review policy requires. No filtering out the unhappy ones.</p>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

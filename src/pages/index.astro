@@ -1,0 +1,167 @@
+---
+import Base from '../layouts/Base.astro';
+import GeoGrid from '../components/GeoGrid.astro';
+import ValueLadder from '../components/ValueLadder.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import pillars from '../data/pillars.json';
+import industries from '../data/industries.json';
+import { site } from '../config/site';
+import { exclusivity } from '../lib/plans';
+import { faqSchema } from '../lib/faq';
+---
+<Base
+  title="Benchmark Digital | Local marketing for south-side Indianapolis service businesses"
+  description="Get found first on Google Maps in Franklin Township, Beech Grove and Greenwood. Local marketing for roofers, HVAC, plumbers and pet businesses. Start with a free Maps scan."
+  schema={[faqSchema('home')]}
+>
+  <section class="hero">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Franklin Township · Beech Grove · Greenwood</p>
+        <h1>I help south-side service businesses stay booked solid by making them the first name neighbors find on Google.</h1>
+        <p class="lead">
+          Google Maps, reviews, your website, Facebook and email, run as one system by one local person.
+          You pick how fast it gets built.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/free-scan">Get your free Google Maps scan</a>
+          <a class="btn btn--ghost" href="/plans">See plans</a>
+        </div>
+        <p class="small muted hero-note">Hi, I'm {site.owner}. No long pitch, no guaranteed-#1 promises.</p>
+      </div>
+      <div class="hero-grid">
+        <GeoGrid />
+        <p class="small muted center">How a GeoGrid scan looks: each dot is a spot in your area where we search for your service. Green means you're in the map pack there. (Illustration)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight section--alt" aria-labelledby="problem-h">
+    <div class="wrap">
+      <h2 id="problem-h" class="center">Good work isn't enough if nobody can find you.</h2>
+      <div class="grid grid--3 problems">
+        <div class="card">
+          <span class="num">1</span>
+          <h3>Invisible in the map pack</h3>
+          <p>Search "plumber near me" and Google shows three businesses on the map. If you're not one of them, most people never scroll far enough to find you.</p>
+        </div>
+        <div class="card">
+          <span class="num">2</span>
+          <h3>Too few reviews</h3>
+          <p>You've done hundreds of jobs, but only a handful turned into reviews. The competitor with a wall of five stars gets the call, even if your work is better.</p>
+        </div>
+        <div class="card">
+          <span class="num">3</span>
+          <h3>No website, or a weak one</h3>
+          <p>A Facebook page or a one-page site from 2016 doesn't give Google, or the customer, enough reason to pick you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pillars-h">
+    <div class="wrap">
+      <p class="eyebrow">The system</p>
+      <h2 id="pillars-h">Four pillars. Every client gets all four.</h2>
+      <p class="lead">The plans don't decide what you get. They decide how fast it gets built.</p>
+      <div class="grid grid--4 pillars">
+        {pillars.map((p, i) => (
+          <a class="card pillar" href={`/how-it-works#${p.id}`}>
+            <span class="num">{i + 1}</span>
+            <h3>{p.name}</h3>
+            <p>{p.line}</p>
+          </a>
+        ))}
+      </div>
+      <p><a class="arrow-link" href="/how-it-works">How it works</a></p>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="ladder-h">
+    <div class="wrap">
+      <p class="eyebrow">Plans</p>
+      <h2 id="ladder-h">Start free. Climb when you're ready.</h2>
+      <p class="lead">Each step builds on the last. Upgrade any time by paying the difference in setup.</p>
+      <ValueLadder />
+      <p style="margin-top:1.5rem"><a class="arrow-link" href="/plans">Compare plans</a></p>
+    </div>
+  </section>
+
+  <section class="section section--ink" aria-labelledby="free-h">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">The free offer</p>
+        <h2 id="free-h">Two things you can have this week, free.</h2>
+        <p class="lead">No contract, no card. If you never hire us, you still keep both.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/free-scan">Claim the free offer</a>
+          <a class="arrow-link" href="/review-app">About the review app</a>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>A review app for your phone</h3>
+          <p>Thanks and Rate gives you a simple page to text or show customers so leaving a Google review takes a few taps.</p>
+        </div>
+        <div class="card">
+          <h3>A 15-minute Google profile fix</h3>
+          <p>We hop on Zoom, look at your Google Business Profile together and fix the easy stuff on the spot: categories, hours, services, photos.</p>
+        </div>
+        <div class="card">
+          <h3>Plus: a Local Legends feature</h3>
+          <p>A spot on Best of Franklin Township, our community site for local businesses. <a href="/local-legends">How it works</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="ind-h">
+    <div class="wrap">
+      <p class="eyebrow">Who we work with</p>
+      <h2 id="ind-h">Built for service businesses with 1 to 10 people.</h2>
+      <div class="grid grid--2">
+        {industries.industries.map((ind) => (
+          <a class="card industry" href={`/industries/${ind.slug}`}>
+            <h3>{ind.name}</h3>
+            <p>{ind.trades.join(' · ')}</p>
+            <span class="arrow-link">What fits {ind.name.toLowerCase()}</span>
+          </a>
+        ))}
+      </div>
+      <p class="note" style="margin-top:1.5rem"><strong>One per category.</strong> {exclusivity} If your spot is taken, we'll tell you up front.</p>
+    </div>
+  </section>
+
+  <!-- Social proof goes here once there are real, permissioned client stories. Do not add invented ones. -->
+  <section class="section section--tight section--alt" aria-label="Client stories (coming soon)" hidden>
+    <div class="wrap"><div class="placeholder"><strong>Placeholder</strong>Client stories and reviews</div></div>
+  </section>
+
+  <Faq group="home" />
+  <CtaBand />
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(2.5rem, 7vw, 5rem);
+    background-image:
+      linear-gradient(to right, rgb(20 35 58 / 4.5%) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(20 35 58 / 4.5%) 1px, transparent 1px);
+    background-size: 32px 32px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero h1 { font-size: clamp(2rem, 4.6vw, 3.2rem); }
+  .hero-note { margin-top: 1rem; }
+  .hero-grid {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: clamp(1rem, 3vw, 1.75rem); box-shadow: var(--shadow);
+    max-width: 30rem; width: 100%; justify-self: center;
+  }
+  .hero-grid > p { margin: 0.75rem 0 0; }
+  .problems { margin-top: 1.5rem; }
+  .pillars { margin-block: 1.5rem; }
+  .pillar, .industry { text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+  .pillar:hover, .industry:hover { border-color: var(--brass); transform: translateY(-2px); }
+  .section--ink .split { align-items: start; }
+</style>

@@ -1,0 +1,148 @@
+{
+  "plans": [
+    {
+      "id": "free",
+      "name": "Free offer",
+      "short": "Free",
+      "setup": 0,
+      "monthly": 0,
+      "annual": null,
+      "term": "No commitment",
+      "minimumMonths": null,
+      "recommended": false,
+      "tagline": "A quick win, no strings.",
+      "features": [
+        "Thanks and Rate review app",
+        "15-minute Google Business Profile fix on Zoom",
+        "Local Legends feature"
+      ],
+      "cta": { "label": "Get your free scan", "href": "/free-scan" }
+    },
+    {
+      "id": "maps-reviews",
+      "name": "Maps & Reviews Care",
+      "short": "Maps & Reviews",
+      "setup": 0,
+      "monthly": 250,
+      "annual": 2500,
+      "term": "Month to month",
+      "minimumMonths": null,
+      "recommended": false,
+      "tagline": "Keep your Google profile busy and your reviews answered.",
+      "features": [
+        "Google profile optimization",
+        "Weekly posts",
+        "Review monitoring and responses",
+        "Monthly insights report"
+      ]
+    },
+    {
+      "id": "local-essentials",
+      "name": "Local Essentials",
+      "short": "Local Essentials",
+      "setup": 500,
+      "monthly": 375,
+      "annual": null,
+      "term": "6-month minimum",
+      "minimumMonths": 6,
+      "recommended": false,
+      "tagline": "A real website and the basics, done right.",
+      "features": [
+        "3-page site + 1 new page/month",
+        "Stock-based logo",
+        "Weekly Google posts",
+        "Monthly Facebook post",
+        "Manual review invitations",
+        "50 citations",
+        "2 local backlinks/yr",
+        "Monthly GeoGrid scan",
+        "Hosting and up to 1 hour of support"
+      ]
+    },
+    {
+      "id": "growth-builder",
+      "name": "Growth Builder",
+      "short": "Growth Builder",
+      "setup": 1750,
+      "monthly": 875,
+      "annual": null,
+      "term": "6-month minimum",
+      "minimumMonths": 6,
+      "recommended": true,
+      "tagline": "The full system, built steadily month by month.",
+      "features": [
+        "8-page site + 2 new pages/month until 35",
+        "Online booking",
+        "Automated review invitations",
+        "Lead magnet and nurture emails",
+        "Customer loyalty emails",
+        "Weekly Google and Facebook posts",
+        "3 backlinks/yr",
+        "GeoGrid scans every two weeks"
+      ]
+    },
+    {
+      "id": "leads-loyalty",
+      "name": "Leads & Loyalty",
+      "short": "Leads & Loyalty",
+      "setup": 4500,
+      "monthly": 1250,
+      "annual": null,
+      "term": "",
+      "minimumMonths": null,
+      "recommended": false,
+      "tagline": "The full system, built all at once.",
+      "features": [
+        "All 35 pages with copy",
+        "Custom logo and branding",
+        "One professional photo session",
+        "Full email system",
+        "SEO opportunity report",
+        "4 backlinks/yr",
+        "GeoGrid scans every two weeks plus radius expansion"
+      ]
+    }
+  ],
+
+  "comparison": [
+    { "feature": "Thanks and Rate review app", "values": { "free": true, "maps-reviews": true, "local-essentials": true, "growth-builder": true, "leads-loyalty": true } },
+    { "feature": "Google Business Profile", "values": { "free": "15-minute fix on Zoom", "maps-reviews": "Optimization", "local-essentials": "Optimization", "growth-builder": "Optimization", "leads-loyalty": "Optimization" } },
+    { "feature": "Google posts", "values": { "free": false, "maps-reviews": "Weekly", "local-essentials": "Weekly", "growth-builder": "Weekly", "leads-loyalty": "Weekly" } },
+    { "feature": "Facebook posts", "values": { "free": false, "maps-reviews": false, "local-essentials": "Monthly", "growth-builder": "Weekly", "leads-loyalty": "Weekly" } },
+    { "feature": "Review monitoring and responses", "values": { "free": false, "maps-reviews": true, "local-essentials": true, "growth-builder": true, "leads-loyalty": true } },
+    { "feature": "Review invitations", "values": { "free": false, "maps-reviews": false, "local-essentials": "Manual", "growth-builder": "Automated", "leads-loyalty": "Automated" } },
+    { "feature": "Monthly insights report", "values": { "free": false, "maps-reviews": true, "local-essentials": true, "growth-builder": true, "leads-loyalty": true } },
+    { "feature": "Website", "values": { "free": false, "maps-reviews": false, "local-essentials": "3 pages + 1 new page/month", "growth-builder": "8 pages + 2 new pages/month until 35", "leads-loyalty": "All 35 pages with copy" } },
+    { "feature": "Hosting and support", "values": { "free": false, "maps-reviews": false, "local-essentials": "Up to 1 hour/month", "growth-builder": true, "leads-loyalty": true } },
+    { "feature": "Logo", "values": { "free": false, "maps-reviews": false, "local-essentials": "Stock-based", "growth-builder": "Stock-based", "leads-loyalty": "Custom logo and branding" } },
+    { "feature": "Online booking", "values": { "free": false, "maps-reviews": false, "local-essentials": false, "growth-builder": true, "leads-loyalty": true } },
+    { "feature": "Lead magnet and nurture emails", "values": { "free": false, "maps-reviews": false, "local-essentials": false, "growth-builder": true, "leads-loyalty": "Full email system" } },
+    { "feature": "Customer loyalty emails", "values": { "free": false, "maps-reviews": false, "local-essentials": false, "growth-builder": true, "leads-loyalty": true } },
+    { "feature": "Citations", "values": { "free": false, "maps-reviews": false, "local-essentials": "50", "growth-builder": "50", "leads-loyalty": "50" } },
+    { "feature": "Local backlinks", "values": { "free": false, "maps-reviews": false, "local-essentials": "2/yr", "growth-builder": "3/yr", "leads-loyalty": "4/yr" } },
+    { "feature": "GeoGrid scans", "values": { "free": "One snapshot", "maps-reviews": false, "local-essentials": "Monthly", "growth-builder": "Every two weeks", "leads-loyalty": "Every two weeks + radius expansion" } },
+    { "feature": "Professional photo session", "values": { "free": false, "maps-reviews": false, "local-essentials": false, "growth-builder": false, "leads-loyalty": "One session" } },
+    { "feature": "SEO opportunity report", "values": { "free": false, "maps-reviews": false, "local-essentials": false, "growth-builder": false, "leads-loyalty": true } },
+    { "feature": "Local Legends feature", "values": { "free": true, "maps-reviews": true, "local-essentials": true, "growth-builder": true, "leads-loyalty": true } }
+  ],
+
+  "boltOns": [
+    { "id": "lsa", "name": "Google Local Service Ads management", "price": 200, "unit": "mo", "adSpendMinimum": 450, "note": "Home services only. The \"Google Guaranteed\" ads at the very top of the page." },
+    { "id": "search-ads", "name": "Google Search Ads management", "price": 350, "unit": "mo", "adSpendMinimum": 450, "note": "Classic pay-per-click ads for the searches that matter most." },
+    { "id": "authority-accelerator", "name": "Authority Accelerator", "price": 500, "unit": "mo", "adSpendMinimum": null, "note": "Extra pages, faster expansion, competitive link building." },
+    { "id": "photography", "name": "Professional photography", "price": 400, "unit": "one-time", "adSpendMinimum": null, "note": "Real photos of your team, trucks and work." },
+    { "id": "logo", "name": "Custom logo upgrade", "price": 300, "unit": "one-time", "adSpendMinimum": null, "note": "Swap the stock-based logo for one made for you." }
+  ],
+
+  "noNurtureDiscount": {
+    "amount": 500,
+    "plans": ["growth-builder", "leads-loyalty"],
+    "text": "off setup for Growth Builder and Leads & Loyalty when the business doesn't need educational email (e.g., emergency repair, grooming, boarding)."
+  },
+
+  "upgrade": "Pay the difference in setup fees; the new monthly fee starts next billing cycle.",
+
+  "foundingClients": "Current prices are held for the first few clients in exchange for a case study.",
+
+  "exclusivity": "We work with one business per category per area."
+}

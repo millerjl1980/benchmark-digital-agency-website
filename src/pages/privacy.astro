@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../config/site';
+// TODO(Justin): set the effective date when this goes live, and have it reviewed if you add new tools.
+const effective = 'TBD';
+---
+<Base title="Privacy" description="How Benchmark Digital collects, uses and protects information submitted through benchmarkdigital.agency.">
+  <PageHero eyebrow="Privacy" title="Privacy policy" lead={`Plain English. Effective date: ${effective}.`} />
+  <section class="section">
+    <div class="wrap narrow prose">
+      <h2>What we collect</h2>
+      <p>When you fill out a form, we collect what you type: your business name, your name, email, phone number, business type, your Google Business Profile link or address, the best time to reach you, and any message.</p>
+      <p>We also record basic context with each form: the page you were on, the page you first landed on, the referring site, any campaign tags in the link (UTM parameters), your IP address, approximate country and browser type. This helps us spot spam and know which marketing works.</p>
+
+      <h2>How we use it</h2>
+      <ul>
+        <li>To contact you about your request and prepare your free scan.</li>
+        <li>To provide services if you become a client.</li>
+        <li>To keep the forms free of spam.</li>
+      </ul>
+      <p>We don't sell your information, and we don't share it with anyone except the services below that help us run this site.</p>
+
+      <h2>Services we use</h2>
+      <ul>
+        <li><strong>Cloudflare</strong> hosts this site and runs Turnstile, a spam check on our forms. Turnstile may process your IP address and browser details to tell people from bots.</li>
+        <li><strong>n8n</strong>, our self-hosted workflow tool, receives form submissions and routes them to our inbox and records.</li>
+        <li><strong>Clicky</strong> provides privacy-friendly visitor statistics, such as page views and referring sites.</li>
+        {site.calendlyUrl && <li><strong>Calendly</strong> handles call bookings on the contact page, under its own privacy policy.</li>}
+      </ul>
+
+      <h2>Cookies</h2>
+      <p>We don't use advertising cookies. Turnstile and Clicky may set small cookies or similar storage needed to work. Our forms keep campaign tags in your browser's session storage until you close the tab.</p>
+
+      <h2>How long we keep it</h2>
+      <p>We keep lead information as long as it's useful for following up or serving you as a client. Ask and we'll delete it.</p>
+
+      <h2>Your choices</h2>
+      <p>To see, correct or delete what we have about you, email <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+
+      <h2>Changes</h2>
+      <p>If this policy changes, we'll update it here and change the effective date above.</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .prose h2 { font-size: 1.5rem; margin-top: 2rem; }
+</style>

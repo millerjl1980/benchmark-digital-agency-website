@@ -1,0 +1,46 @@
+---
+import Logo from './Logo.astro';
+import { nav, site, telHref } from '../config/site';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer section--ink">
+  <div class="wrap cols">
+    <div class="about">
+      <Logo inverse />
+      <p class="muted">{site.tagline}. Serving {site.serviceArea.slice(0, -1).join(', ')} and the {site.serviceArea.at(-1)!.toLowerCase()}.</p>
+      <p>
+        {site.phone && <><a href={telHref(site.phone)}>{site.phone}</a><br /></>}
+        {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+      </p>
+    </div>
+    <nav aria-label="Footer">
+      <h2 class="h">Site</h2>
+      <ul>
+        {nav.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div>
+      <h2 class="h">Free stuff</h2>
+      <ul>
+        <li><a href="/free-scan">Free Google Maps scan</a></li>
+        <li><a href="/review-app">Free review app</a></li>
+        <li><a href="/local-legends">Local Legends</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap legal">
+    <p>© {year} {site.name} · <a href="/privacy">Privacy</a></p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { padding-block: 3rem 1.5rem; background-position: left -300px bottom -300px; }
+  .cols { display: grid; gap: 2rem; }
+  @media (min-width: 46rem) { .cols { grid-template-columns: 2fr 1fr 1fr; } }
+  .about p { margin-top: 1rem; max-width: 26rem; }
+  .h { font-size: 1rem; font-family: var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); }
+  ul { list-style: none; padding: 0; }
+  a { text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .legal { border-top: 1px solid #2a3c58; margin-top: 2rem; padding-top: 1.25rem; font-size: 0.9rem; color: var(--on-ink-soft); }
+</style>

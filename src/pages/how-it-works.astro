@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import GeoGrid from '../components/GeoGrid.astro';
+import CtaBand from '../components/CtaBand.astro';
+import pillars from '../data/pillars.json';
+import { paidPlans } from '../lib/plans';
+---
+<Base
+  title="How it works"
+  description="Google Business Profile, website, Facebook and email, run as one system. See how GeoGrid scans decide what we build each month and what you get in your report."
+>
+  <PageHero
+    eyebrow="How it works"
+    title="One system, four pillars, measured every month."
+    lead="We set up all four pillars, then use GeoGrid scans to decide what to build next. You see the same scans we do."
+  >
+    <nav class="jump" aria-label="On this page">
+      {pillars.map((p) => <a href={`#${p.id}`}>{p.name}</a>)}
+      <a href="#geogrid">GeoGrid</a>
+      <a href="#monthly">Each month</a>
+      <a href="#reporting">Reporting</a>
+    </nav>
+  </PageHero>
+
+  {pillars.map((p, i) => (
+    <section class:list={['section', { 'section--alt': i % 2 === 1 }]} id={p.id} aria-labelledby={`${p.id}-h`}>
+      <div class="wrap split pillar">
+        <div>
+          <p class="eyebrow">Pillar {i + 1}</p>
+          <h2 id={`${p.id}-h`}>{p.name}</h2>
+          <p class="lead">{p.detail}</p>
+        </div>
+        <div class="card">
+          <h3>What we do</h3>
+          <ul class="checks">{p.items.map((it) => <li>{it}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--ink" id="geogrid" aria-labelledby="geogrid-h">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">The GeoGrid process</p>
+        <h2 id="geogrid-h">We don't guess where you rank. We check 144 spots.</h2>
+        <p>
+          Your ranking changes depending on where the customer is standing. You might be #1 a mile from your shop and invisible five miles out.
+          A GeoGrid scan searches for your main service from 144 points around you and records where you land at each one.
+        </p>
+        <ol class="steps">
+          <li>
+            <strong>Lay the grid.</strong> A 12×12 grid of points, 1 mile apart, centered on your business.
+          </li>
+          <li>
+            <strong>Score it.</strong> We count how many of those dots have you in the map pack (the top 3).
+          </li>
+          <li>
+            <strong>Under 30% in the map pack: write.</strong> Google isn't sure you're the expert yet, so we publish helpful blog posts about the services people search for.
+          </li>
+          <li>
+            <strong>Over 30%: spread out.</strong> You're trusted close to home, so we add location pages for the towns and neighborhoods at the edges of the grid.
+          </li>
+          <li>
+            <strong>Expand the radius.</strong> As the grid fills in, we widen it, working toward about 12 miles around you.
+          </li>
+        </ol>
+      </div>
+      <div class="grid-panel">
+        <GeoGrid coverage={0.42} showRing animate={false} label="Illustration of a GeoGrid scan with a dashed ring showing current coverage. Inside the ring the dots are green; outside they are grey." />
+        <p class="small center muted">Illustration only. The dashed ring is the area you currently win; the goal is to push it outward.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="monthly" aria-labelledby="monthly-h">
+    <div class="wrap">
+      <p class="eyebrow">Each month</p>
+      <h2 id="monthly-h">What you get every month</h2>
+      <p class="lead">What arrives each month depends on your plan. Full details are on the <a href="/plans">plans page</a>.</p>
+      <div class="grid grid--4">
+        {paidPlans.map((p) => (
+          <div class:list={['card', { rec: p.recommended }]}>
+            <h3>{p.name}</h3>
+            <ul class="checks small">{p.features.map((f) => <li>{f}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="reporting" aria-labelledby="report-h">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Reporting</p>
+        <h2 id="report-h">A short report you'll actually read</h2>
+        <p class="lead">One page, plain English, once a month. If something isn't working, the report says so.</p>
+        <ul class="checks">
+          <li>Your latest GeoGrid scan next to last month's</li>
+          <li>Calls, website clicks and direction requests from your Google profile</li>
+          <li>New reviews and your average rating</li>
+          <li>What we published and built this month</li>
+          <li>What we're working on next, and why</li>
+        </ul>
+      </div>
+      <div class="placeholder report-ph" style="aspect-ratio: 4 / 3">
+        <div><strong>Placeholder</strong>Sample monthly report screenshot</div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading="Want to see your own grid?" />
+</Base>
+
+<style>
+  .jump { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .jump a {
+    font-weight: 600; font-size: 0.95rem; text-decoration: none;
+    padding: 0.4rem 0.85rem; border: 1.5px solid var(--line); border-radius: 999px; background: var(--card);
+  }
+  .jump a:hover { border-color: var(--brass); }
+  .pillar { align-items: start; }
+  .steps { padding-left: 1.4rem; }
+  .steps li { margin-bottom: 0.8rem; padding-left: 0.3rem; }
+  .steps li::marker { color: var(--brass); font-weight: 700; font-family: var(--font-head); }
+  .grid-panel { background: #182840; border: 1px solid #2a3c58; border-radius: 16px; padding: 1.5rem; color: var(--on-ink); }
+  .rec { border: 2px solid var(--brass); }
+</style>

@@ -1,0 +1,196 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import PlanCard from '../components/PlanCard.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Faq from '../components/Faq.astro';
+import {
+  plans, paidPlans, comparison, boltOns, boltOnPrice, noNurtureDiscount, upgrade,
+  foundingClients, exclusivity, getPlan, money, monthlyLabel, setupLabel,
+} from '../lib/plans';
+import { faqSchema } from '../lib/faq';
+
+const free = getPlan('free');
+const discountPlans = noNurtureDiscount.plans.map((id) => getPlan(id).name).join(' and ');
+const authority = ['local-essentials', 'growth-builder', 'leads-loyalty'].map((id) => {
+  const p = getPlan(id);
+  const row = (name: string) => comparison.find((r) => r.feature === name)!.values[id as keyof (typeof comparison)[number]['values']];
+  return { plan: p, citations: row('Citations'), backlinks: row('Local backlinks'), geogrid: row('GeoGrid scans') };
+});
+const cell = (v: string | boolean) => (v === true ? '✓' : v === false ? '—' : v);
+---
+<Base
+  title="Plans and pricing"
+  description={`Local marketing plans from free to ${monthlyLabel(plans.at(-1)!)}. Google Business Profile care, websites, reviews, Facebook and email for south-side Indianapolis service businesses.`}
+  schema={[faqSchema('plans')]}
+>
+  <PageHero
+    eyebrow="Plans"
+    title="Same complete system. You choose how fast it gets built."
+    lead="Every plan works toward the same thing: a busy Google profile, a site with a page for every service and town, steady reviews, and follow-up email. Higher plans just get you there sooner."
+  />
+
+  <section class="section" aria-labelledby="plans-h">
+    <div class="wrap">
+      <h2 id="plans-h" class="sr-only">Monthly plans</h2>
+      <div class="plans-grid">
+        {paidPlans.map((p) => <PlanCard plan={p} />)}
+      </div>
+      <div class="free-strip card">
+        <div>
+          <h3>Not ready? Start with the {free.name.toLowerCase()}.</h3>
+          <p class="muted">{free.features.join(' · ')}. {setupLabel(free)}, $0/mo.</p>
+        </div>
+        <a class="btn btn--dark" href="/free-scan">Get the free offer</a>
+      </div>
+      <div class="grid grid--3 terms">
+        <p class="note"><strong>Terms.</strong> {getPlan('maps-reviews').name} is month to month. {getPlan('local-essentials').name} and {getPlan('growth-builder').name} have a 6-month minimum.</p>
+        <p class="note"><strong>Founding clients.</strong> {foundingClients}</p>
+        <p class="note"><strong>One per category.</strong> {exclusivity}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="compare-h">
+    <div class="wrap">
+      <h2 id="compare-h">Compare plans</h2>
+      <p class="muted small">Scroll sideways on a phone to see every plan.</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-labelledby="compare-h">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              {plans.map((p) => (
+                <th scope="col" class:list={{ rec: p.recommended }}>
+                  {p.name}{p.recommended && <span class="rec-label">Recommended</span>}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Monthly</th>
+              {plans.map((p) => <td class:list={['strong', { rec: p.recommended }]}>{monthlyLabel(p)}{p.annual && <><br /><span class="muted">or {money(p.annual)}/yr</span></>}</td>)}
+            </tr>
+            <tr>
+              <th scope="row">Setup</th>
+              {plans.map((p) => <td class:list={{ rec: p.recommended }}>{money(p.setup)}</td>)}
+            </tr>
+            <tr>
+              <th scope="row">Term</th>
+              {plans.map((p) => <td class:list={{ rec: p.recommended }}>{p.term || 'Ask'}</td>)}
+            </tr>
+            {comparison.map((row) => (
+              <tr>
+                <th scope="row">{row.feature}</th>
+                {plans.map((p) => {
+                  const v = row.values[p.id as keyof typeof row.values];
+                  return (
+                    <td class:list={{ rec: p.recommended, no: v === false }}>
+                      {v === true ? <span aria-label="Included">✓</span> : v === false ? <span aria-label="Not included">—</span> : cell(v)}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="authority-h">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Authority signals</p>
+        <h2 id="authority-h">Why Google trusts one business over another</h2>
+        <p>Google ranks local businesses partly on how real and established they look across the web. Two things do a lot of that work:</p>
+        <ul class="checks">
+          <li><strong>Citations:</strong> your name, phone and service area listed the same way on directories like Yelp, Bing, Apple Maps and the BBB.</li>
+          <li><strong>Local backlinks:</strong> links from other local sites (a chamber, a sponsor page, a neighborhood blog) that point to yours.</li>
+        </ul>
+        <p>We build both on every website plan and track the effect with GeoGrid scans.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <caption class="sr-only">Authority signals by plan</caption>
+          <thead><tr><th scope="col">Plan</th><th scope="col">Citations</th><th scope="col">Local backlinks</th><th scope="col">GeoGrid scans</th></tr></thead>
+          <tbody>
+            {authority.map((a) => (
+              <tr><th scope="row">{a.plan.name}</th><td>{cell(a.citations)}</td><td>{cell(a.backlinks)}</td><td>{cell(a.geogrid)}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="bolt-h">
+    <div class="wrap">
+      <h2 id="bolt-h">Bolt-ons</h2>
+      <p class="lead">Add these to any plan when they make sense. Ad spend is paid to Google, separate from our fee.</p>
+      <div class="grid grid--3">
+        {boltOns.map((b) => (
+          <div class="card">
+            <h3>{b.name}</h3>
+            <p class="bolt-price">{boltOnPrice(b)}</p>
+            <p class="muted">{b.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="save-h">
+    <div class="wrap grid grid--2">
+      <div class="card">
+        <p class="eyebrow">Save on setup</p>
+        <h2 id="save-h" class="h3">{money(noNurtureDiscount.amount)} off if you don't need nurture emails</h2>
+        <p>{money(noNurtureDiscount.amount)} {noNurtureDiscount.text}</p>
+        <p class="muted small">Applies to {discountPlans}.</p>
+      </div>
+      <div class="card">
+        <p class="eyebrow">Upgrading</p>
+        <h2 class="h3">Move up any time</h2>
+        <p>{upgrade}</p>
+        <p class="muted small">Example: going from {getPlan('local-essentials').name} to {getPlan('growth-builder').name} costs {money(getPlan('growth-builder').setup - getPlan('local-essentials').setup)} in setup, then {monthlyLabel(getPlan('growth-builder'))}.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="start" aria-labelledby="start-h">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Get started</p>
+        <h2 id="start-h">Tell us about your business</h2>
+        <p class="lead">We'll start with a free GeoGrid scan so you can see where you stand, then recommend a plan. If the free offer is all you need, that's fine too.</p>
+      </div>
+      <div class="card">
+        <LeadForm source="plans" id="plans-form" showPlan submitLabel="Send it over" />
+      </div>
+    </div>
+  </section>
+
+  <Faq group="plans" heading="Plan questions" />
+</Base>
+
+<style>
+  .plans-grid { display: grid; gap: 1.5rem; padding-top: 0.9rem; }
+  @media (min-width: 46rem) { .plans-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 72rem) { .plans-grid { grid-template-columns: repeat(4, 1fr); } }
+  .free-strip { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+  .free-strip h3 { margin-bottom: 0.25rem; }
+  .free-strip p { margin: 0; }
+  .terms { margin-top: 1.5rem; }
+  .terms .note { margin: 0; }
+  .compare { min-width: 56rem; }
+  .compare thead th { vertical-align: bottom; }
+  .compare tbody th { font-weight: 600; width: 14rem; }
+  .compare .rec { background: rgb(201 151 63 / 10%); }
+  .compare thead .rec { background: var(--ink); color: var(--on-ink); }
+  .rec-label { display: block; font: 700 0.7rem var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass-light); }
+  .compare .no { color: #8d877a; }
+  .strong { font-weight: 700; }
+  .bolt-price { font-weight: 700; }
+  .h3 { font-size: 1.45rem; }
+</style>
