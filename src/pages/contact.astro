@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { site, telHref } from '../config/site';
+const calendly = site.calendlyUrl
+  ? `${site.calendlyUrl}${site.calendlyUrl.includes('?') ? '&' : '?'}hide_gdpr_banner=1&embed_type=Inline`
+  : '';
+---
+<Base
+  title="Contact"
+  description="Book a call with Justin or send a message. Local marketing for service businesses in Franklin Township, Beech Grove and Greenwood."
+>
+  <PageHero eyebrow="Contact" title="Let's talk about your business." lead="Book a time that works for you, or send the form and I'll reach out when you said is best." />
+  <section class="section">
+    <div class="wrap split contact">
+      <div class="stack">
+        <h2 class="h3">Book a call</h2>
+        {calendly ? (
+          <iframe
+            class="calendly"
+            src={calendly}
+            title="Book a call with Justin (Calendly)"
+            loading="lazy"
+            width="100%"
+            height="700"
+          ></iframe>
+        ) : (
+          <div class="placeholder calendly-ph">
+            <div><strong>Placeholder</strong>Calendly booking embed<br /><span class="small">Set calendlyUrl in src/config/site.ts</span></div>
+          </div>
+        )}
+        <p>
+          {site.phone && <>Call or text <a href={telHref(site.phone)}>{site.phone}</a><br /></>}
+          Email <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+      <div class="card">
+        <h2 class="h3">Send a message</h2>
+        <LeadForm source="contact" id="contact-form" showMessage submitLabel="Send message" />
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .contact { align-items: start; }
+  .calendly { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; height: 700px; }
+  .calendly-ph { height: 420px; }
+  .h3 { font-size: 1.6rem; }
+</style>

@@ -1,0 +1,116 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site, telHref } from '../config/site';
+import { plans, money } from '../lib/plans';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  /** Extra JSON-LD objects for this page (FAQPage, etc.) */
+  schema?: object[];
+  ogImage?: string;
+}
+const { title, description, noindex = false, schema = [], ogImage = '/brand/og-image.png' } = Astro.props;
+const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/'), site.url).href;
+const fullTitle = Astro.url.pathname === '/' ? title : `${title} | ${site.name}`;
+
+const monthly = plans.map((p) => p.monthly).filter((n) => n > 0);
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${site.url}/#business`,
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/brand/mark.png`,
+  image: `${site.url}/brand/og-image.png`,
+  description:
+    'Local marketing for small service businesses on the south side of Indianapolis: Google Business Profile, websites, Facebook and email.',
+  founder: { '@type': 'Person', name: site.owner },
+  priceRange: `${money(Math.min(...monthly))}–${money(Math.max(...monthly))}/mo`,
+  // Service-area business: no street address is published on purpose.
+  areaServed: site.serviceArea.map((name) => ({ '@type': 'Place', name: `${name}, IN` })),
+  ...(site.phone ? { telephone: site.phone } : {}),
+  ...(site.email ? { email: site.email } : {}),
+};
+const sameAs = [site.links.facebook, site.links.googleBusinessProfile].filter(Boolean);
+if (sameAs.length) Object.assign(business, { sameAs });
+const jsonLd = [business, ...schema];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content="#101c2e" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href="/fonts/zilla-slab-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/source-sans-3-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, site.url)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd.length === 1 ? business : jsonLd)} />
+
+    <script is:inline>
+      // Remember UTM parameters for the whole visit so any form can send them.
+      try {
+        var q = new URLSearchParams(location.search), u = {};
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach(function (k) {
+          if (q.get(k)) u[k] = q.get(k).slice(0, 200);
+        });
+        if (Object.keys(u).length) sessionStorage.setItem('bd_utm', JSON.stringify(u));
+        if (!sessionStorage.getItem('bd_landing')) {
+          sessionStorage.setItem('bd_landing', location.pathname);
+          sessionStorage.setItem('bd_referrer', document.referrer.slice(0, 300));
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <nav class="action-bar" aria-label="Quick actions">
+      {site.phone
+        ? <a class="btn btn--ghost" href={telHref(site.phone)}>Call {site.phone}</a>
+        : <a class="btn btn--ghost" href="/contact">Contact</a>}
+      <a class="btn btn--primary" href="/free-scan">Free Maps scan</a>
+    </nav>
+
+    {site.clickySiteId && (
+      <script is:inline define:vars={{ id: site.clickySiteId }}>
+        // Clicky (privacy-friendly analytics), loaded after the page is idle so it never blocks rendering.
+        window.addEventListener('load', function () {
+          (window.requestIdleCallback || setTimeout)(function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.dataset.id = id;
+            s.src = 'https://static.getclicky.com/js';
+            document.body.appendChild(s);
+          });
+        });
+      </script>
+    )}
+  </body>
+</html>

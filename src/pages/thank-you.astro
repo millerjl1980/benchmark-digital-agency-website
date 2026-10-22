@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../config/site';
+---
+<Base title="Thanks, got it" description="Your request was received." noindex>
+  <section class="section">
+    <div class="wrap narrow">
+      <p class="eyebrow">Received</p>
+      <h1>Thanks. Your request is in.</h1>
+      <p class="lead">{site.owner} will reach out {site.responseTime}, at the time you said works best.</p>
+
+      <h2 class="h3">What happens next</h2>
+      <ol class="next">
+        <li><strong>We run your GeoGrid scan.</strong> A snapshot of where you show up on Google Maps around your business.</li>
+        <li><strong>We look over your Google profile</strong> and note the fixes that matter most.</li>
+        <li><strong>We send your review app</strong> and offer a 15-minute Zoom to go over the scan and fix the easy stuff together.</li>
+      </ol>
+
+      <div class="card">
+        <h2 class="h3">While you wait</h2>
+        <ul class="checks">
+          <li>Open your Google Business Profile and make sure your hours and phone number are right.</li>
+          <li>Find 3 or 4 recent photos of your work. We'll use them.</li>
+          <li>Think of 5 happy customers you could ask for a review this week.</li>
+        </ul>
+      </div>
+      <p style="margin-top:2rem">
+        Need to add something? Email <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn--dark" href="/how-it-works">See how it works</a>
+        <a class="arrow-link" href="/">Back to home</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .h3 { font-size: 1.45rem; margin-top: 2rem; }
+  .card .h3 { margin-top: 0; }
+  .next { padding-left: 1.3rem; margin-bottom: 2rem; }
+  .next li { margin-bottom: 0.6rem; }
+  .next li::marker { color: var(--brass-text); font-weight: 700; }
+</style>

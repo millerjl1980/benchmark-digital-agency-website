@@ -1,0 +1,84 @@
+{
+  "industries": [
+    {
+      "slug": "home-services",
+      "name": "Home services",
+      "title": "Marketing for roofers, HVAC and plumbers on the south side",
+      "metaDescription": "Show up in the Google Maps pack when Franklin Township, Beech Grove and Greenwood homeowners need a roofer, HVAC tech or plumber. Plans, bolt-ons and what fits.",
+      "headline": "When the furnace dies, they call whoever Google shows first.",
+      "intro": "Roofing, HVAC and plumbing calls are won in the map pack. The homeowner is stressed, on their phone, and picks one of the first three names they see. Our job is to make that you.",
+      "trades": ["Roofing", "HVAC", "Plumbing", "Lawn care", "Pest control"],
+      "searches": [
+        "furnace repair near me",
+        "emergency plumber Greenwood",
+        "roof leak repair Beech Grove",
+        "AC not cooling",
+        "water heater replacement",
+        "roof replacement estimate",
+        "lawn mowing service near me",
+        "pest control Franklin Township"
+      ],
+      "searchNote": "Examples of the searches homeowners type. We check your actual searches in the free scan.",
+      "planFit": {
+        "plan": "growth-builder",
+        "why": "Home services buyers compare reviews and look at your website before they call. {growth-builder.name} builds the pages for each service and town you cover, automates review requests after every job, and adds online booking so the calls you miss still turn into appointments."
+      },
+      "alsoConsider": {
+        "plan": "maps-reviews",
+        "why": "Already have a website you're happy with? {maps-reviews.name} keeps your Google profile active and your reviews answered for {maps-reviews.monthly}."
+      },
+      "nurture": {
+        "applies": "Sometimes",
+        "text": "Planned, expensive jobs (a new roof, a new HVAC system) take weeks to decide, so nurture emails help you stay the obvious choice. Emergency repair work doesn't need them. If that's most of your work, take {discount} off setup."
+      },
+      "lsa": true,
+      "faqKey": "home-services"
+    },
+    {
+      "slug": "pet-services",
+      "name": "Pet services",
+      "title": "Marketing for dog groomers, boarding, trainers and vets",
+      "metaDescription": "Help south-side pet owners find your grooming, boarding, training or vet business on Google Maps, and keep regulars coming back. Plans and what fits.",
+      "headline": "Pet owners are loyal. First they have to find you.",
+      "intro": "Pet owners read reviews closely. They're trusting you with family. Once they find a groomer, sitter or vet they like, they stay for years. The work is getting found first and earning the reviews that tip the decision.",
+      "trades": ["Dog grooming", "Boarding and daycare", "Dog training", "Veterinary clinics"],
+      "searches": [
+        "dog groomer near me",
+        "dog boarding Greenwood",
+        "doggy daycare Franklin Township",
+        "puppy training classes",
+        "mobile dog grooming",
+        "vet near me open Saturday",
+        "cat boarding near me"
+      ],
+      "searchNote": "Examples of the searches pet owners type. We check your actual searches in the free scan.",
+      "planFit": {
+        "plan": "growth-builder",
+        "why": "Online booking and loyalty emails matter more here than almost anywhere. {growth-builder.name} lets regulars book without calling, reminds them when it's time to come back, and asks happy owners for a review automatically."
+      },
+      "alsoConsider": {
+        "plan": "local-essentials",
+        "why": "Just starting out, or a one-person shop? {local-essentials.name} gets you a clean site, an active Google profile and monthly GeoGrid scans for {local-essentials.monthly}."
+      },
+      "nurture": {
+        "applies": "Depends on the service",
+        "text": "Groomers and boarding don't usually need educational email, so take {discount} off setup. Trainers and vets often do: new owners research first, and a helpful puppy guide or new-pet checklist keeps you in mind."
+      },
+      "lsa": false,
+      "faqKey": "pet-services"
+    }
+  ],
+
+  "formCategories": [
+    "Roofing",
+    "HVAC",
+    "Plumbing",
+    "Lawn care",
+    "Pest control",
+    "Dog grooming",
+    "Boarding or daycare",
+    "Dog training",
+    "Veterinary",
+    "Other"
+  ]
+}

@@ -1,0 +1,216 @@
+---
+/**
+ * Lead form. Posts to the Cloudflare Pages Function at /api/lead (functions/api/lead.ts).
+ * Turnstile loads only when the form scrolls near view or gets focus, so it costs nothing on page load.
+ */
+import { site } from '../config/site';
+import industries from '../data/industries.json';
+import { plans } from '../lib/plans';
+
+interface Props {
+  source: 'free-scan' | 'contact' | 'plans';
+  id?: string;
+  submitLabel?: string;
+  showPlan?: boolean;
+  showMessage?: boolean;
+}
+const { source, id = 'lead-form', submitLabel = 'Send my free scan request', showPlan = false, showMessage = false } = Astro.props;
+---
+<form
+  class="form"
+  id={id}
+  action="/api/lead"
+  method="post"
+  data-lead-form
+  data-sitekey={site.turnstileSiteKey}
+  data-email={site.email}
+  novalidate
+>
+  <input type="hidden" name="source" value={source} />
+  <input type="hidden" name="utm" value="" />
+  <input type="hidden" name="page" value="" />
+  <div class="hp" aria-hidden="true">
+    <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="two">
+    <div class="field">
+      <label for={`${id}-business`}>Business name</label>
+      <input id={`${id}-business`} name="businessName" required maxlength="120" autocomplete="organization" />
+    </div>
+    <div class="field">
+      <label for={`${id}-owner`}>Your name</label>
+      <input id={`${id}-owner`} name="ownerName" required maxlength="120" autocomplete="name" />
+    </div>
+  </div>
+  <div class="two">
+    <div class="field">
+      <label for={`${id}-email`}>Email</label>
+      <input id={`${id}-email`} name="email" type="email" required maxlength="160" autocomplete="email" />
+    </div>
+    <div class="field">
+      <label for={`${id}-phone`}>Phone</label>
+      <input id={`${id}-phone`} name="phone" type="tel" required maxlength="30" autocomplete="tel" inputmode="tel" />
+    </div>
+  </div>
+  <div class="two">
+    <div class="field">
+      <label for={`${id}-category`}>Type of business</label>
+      <select id={`${id}-category`} name="category" required>
+        <option value="">Choose one</option>
+        {industries.formCategories.map((c) => <option>{c}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for={`${id}-time`}>Best time to reach you</label>
+      <select id={`${id}-time`} name="contactTime" required>
+        <option value="">Choose one</option>
+        <option>Morning (8 to 11)</option>
+        <option>Midday (11 to 2)</option>
+        <option>Afternoon (2 to 5)</option>
+        <option>Evening (5 to 7)</option>
+        <option>Any time</option>
+      </select>
+    </div>
+  </div>
+  <div class="field">
+    <label for={`${id}-gbp`}>Google Business Profile link or business address</label>
+    <input id={`${id}-gbp`} name="gbp" required maxlength="500" aria-describedby={`${id}-gbp-hint`} />
+    <span class="hint" id={`${id}-gbp-hint`}>Paste your Google Maps link, or just type the address or the town you work out of.</span>
+  </div>
+  {showPlan && (
+    <div class="field">
+      <label for={`${id}-plan`}>Plan you're interested in <span class="opt">(optional)</span></label>
+      <select id={`${id}-plan`} name="plan">
+        <option value="">Not sure yet</option>
+        {plans.map((p) => <option value={p.id}>{p.name}</option>)}
+      </select>
+    </div>
+  )}
+  {showMessage && (
+    <div class="field">
+      <label for={`${id}-message`}>Anything else? <span class="opt">(optional)</span></label>
+      <textarea id={`${id}-message`} name="message" maxlength="2000"></textarea>
+    </div>
+  )}
+
+  <div class="turnstile-slot" data-turnstile></div>
+  <div class="form-error" role="alert" hidden data-error></div>
+  <noscript>
+    <p class="form-error">This form needs JavaScript for spam protection. You can email <a href={`mailto:${site.email}`}>{site.email}</a> instead.</p>
+  </noscript>
+  <div>
+    <button class="btn btn--primary" type="submit">{submitLabel}</button>
+  </div>
+  <p class="small muted">We'll only use this to contact you about your request. <a href="/privacy">Privacy</a></p>
+</form>
+
+<script>
+  declare global {
+    interface Window {
+      turnstile?: { render: (el: HTMLElement, opts: Record<string, unknown>) => string; reset: (id?: string) => void };
+      bdTurnstileReady?: () => void;
+    }
+  }
+
+  const forms = document.querySelectorAll<HTMLFormElement>('form[data-lead-form]');
+  let loading: Promise<void> | null = null;
+
+  function loadTurnstile() {
+    loading ??= new Promise<void>((resolve, reject) => {
+      window.bdTurnstileReady = resolve;
+      const s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=bdTurnstileReady';
+      s.async = true;
+      s.onerror = () => reject(new Error('turnstile'));
+      document.head.appendChild(s);
+    });
+    return loading;
+  }
+
+  forms.forEach((form) => {
+    const slot = form.querySelector<HTMLElement>('[data-turnstile]')!;
+    const errorBox = form.querySelector<HTMLElement>('[data-error]')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const email = form.dataset.email!;
+    let widgetId: string | undefined;
+
+    // Context fields
+    (form.elements.namedItem('utm') as HTMLInputElement).value = sessionStorage.getItem('bd_utm') ?? '';
+    (form.elements.namedItem('page') as HTMLInputElement).value = JSON.stringify({
+      page: location.pathname,
+      landing: sessionStorage.getItem('bd_landing') ?? '',
+      referrer: sessionStorage.getItem('bd_referrer') ?? '',
+    });
+    const plan = form.elements.namedItem('plan') as HTMLSelectElement | null;
+    const wanted = new URLSearchParams(location.search).get('plan');
+    if (plan && wanted && [...plan.options].some((o) => o.value === wanted)) plan.value = wanted;
+
+    // Back from a no-JS submission that failed
+    if (new URLSearchParams(location.search).get('error')) {
+      queueMicrotask(() => showError(`Sorry, that didn't go through. Try again, or email <a href="mailto:${email}">${email}</a>.`));
+    }
+
+    const start = () => {
+      loadTurnstile()
+        .then(() => {
+          if (widgetId === undefined && window.turnstile) {
+            widgetId = window.turnstile.render(slot, { sitekey: form.dataset.sitekey, theme: 'light', action: 'lead' });
+          }
+        })
+        .catch(() => showError(`The spam check didn't load. Please try again, or email <a href="mailto:${email}">${email}</a>.`));
+    };
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { io.disconnect(); start(); }
+    }, { rootMargin: '300px' });
+    io.observe(form);
+    form.addEventListener('focusin', start, { once: true });
+
+    function showError(html: string) {
+      errorBox.innerHTML = html;
+      errorBox.hidden = false;
+      errorBox.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.hidden = true;
+
+      if (!form.checkValidity()) {
+        const bad = form.querySelector<HTMLElement>(':invalid');
+        showError('Please fill in the highlighted fields.');
+        form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+        form.querySelectorAll(':invalid').forEach((el) => el.setAttribute('aria-invalid', 'true'));
+        bad?.focus();
+        return;
+      }
+      const data = new FormData(form);
+      if (!data.get('cf-turnstile-response')) {
+        start();
+        showError('One second, the spam check is still loading. Try again in a moment.');
+        return;
+      }
+
+      button.disabled = true;
+      const label = button.textContent;
+      button.textContent = 'Sending…';
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+        const body = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+        if (res.ok && body.ok) {
+          location.href = `/thank-you?from=${encodeURIComponent(String(data.get('source')))}`;
+          return;
+        }
+        throw new Error(body.error || 'failed');
+      } catch (err) {
+        const raw = err instanceof Error && err.message !== 'failed' && !err.message.includes('fetch') ? err.message + ' ' : '';
+        const msg = raw.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
+        showError(`${msg}Sorry, that didn't go through. Try again, or email <a href="mailto:${email}">${email}</a> and we'll take it from there.`);
+        if (window.turnstile) window.turnstile.reset(widgetId);
+      } finally {
+        button.disabled = false;
+        button.textContent = label;
+      }
+    });
+  });
+</script>

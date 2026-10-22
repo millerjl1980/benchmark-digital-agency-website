@@ -1,0 +1,70 @@
+{
+  "home": [
+    {
+      "q": "Can you guarantee I'll be #1 on Google?",
+      "a": "No, and be careful with anyone who does. Google decides rankings. What we can do is fix what's holding you back, keep your profile active, and show you a GeoGrid scan so you can see exactly where you show up and whether it's moving."
+    },
+    {
+      "q": "Am I locked into a long contract?",
+      "a": "{maps-reviews.name} is month to month. {local-essentials.name} and {growth-builder.name} have a 6-month minimum, because a website and map rankings take a few months to build. After that you can stay or go."
+    },
+    {
+      "q": "Do I have to give up my Google Business Profile?",
+      "a": "No. Your profile stays in your name. We ask to be added as a manager so we can post, respond to reviews and make updates. You can remove us any time."
+    },
+    {
+      "q": "Why do you only take one business per category?",
+      "a": "We work with one business per category per area. If we're helping one roofer in Greenwood win the map pack, we can't honestly do the same for the roofer down the street."
+    },
+    {
+      "q": "What's the catch with the free offer?",
+      "a": "There isn't one. You get the review app, a 15-minute Zoom where we fix the easy problems on your Google profile, and a snapshot of where you show up on the map. If you want more help after that, we'll talk about it. If not, keep what we fixed."
+    },
+    {
+      "q": "I'm busy. How much of my time does this take?",
+      "a": "Very little. Expect a kickoff call, a few photos and answers from you, and a quick look at your monthly report. We write the posts, the pages and the review replies."
+    }
+  ],
+  "plans": [
+    {
+      "q": "Which plan should I start with?",
+      "a": "Most owners who want the phone to ring more pick {growth-builder.name}. If you already have a decent website and just want your Google profile looked after, start with {maps-reviews.name} at {maps-reviews.monthly}."
+    },
+    {
+      "q": "Can I upgrade later?",
+      "a": "Yes. You pay the difference in setup fees, and the new monthly fee starts next billing cycle. Every plan builds toward the same complete system, so nothing you've paid for is wasted."
+    },
+    {
+      "q": "What is the no-nurturing discount?",
+      "a": "Some businesses don't need educational email. Nobody reads a newsletter before calling about a burst pipe or booking a grooming. If that's you, take {discount} off setup for {growth-builder.name} or {leads-loyalty.name}."
+    },
+    {
+      "q": "Is ad spend included in the ads bolt-ons?",
+      "a": "No. The management fee is ours; ad spend is paid to Google. Plan on about {lsa.adspend} in ad spend at minimum for either ads bolt-on."
+    },
+    {
+      "q": "Is there a discount for paying yearly?",
+      "a": "{maps-reviews.name} is {maps-reviews.monthly} or {maps-reviews.annual} if you pay for the year."
+    }
+  ],
+  "home-services": [
+    {
+      "q": "Do I need the nurture emails?",
+      "a": "It depends on the job. Emergency repair calls don't need them; nobody researches a no-heat call for a week. Bigger, planned jobs like a roof replacement or a new HVAC system do, because people compare options for weeks. If you're mostly emergency work, ask about the {discount} setup discount."
+    },
+    {
+      "q": "Should I run Local Service Ads?",
+      "a": "Often, yes. Local Service Ads sit above everything else on the page and you pay per lead, not per click. We manage them for {lsa.price}, alongside the work that brings in calls for free."
+    }
+  ],
+  "pet-services": [
+    {
+      "q": "Do I need the nurture emails?",
+      "a": "Usually not for grooming or boarding. People book those when they need them. Trainers and vets are different: new owners read and compare first, so the lead magnet and nurture emails earn their keep. If you don't need them, take {discount} off setup."
+    },
+    {
+      "q": "Are the loyalty emails worth it for a groomer?",
+      "a": "Pet services run on repeat visits. Reminder and loyalty emails bring regulars back on schedule and give them an easy reason to leave a review."
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+---
+import Logo from './Logo.astro';
+import { nav, site, telHref } from '../config/site';
+const path = Astro.url.pathname.replace(/\.html$/, '');
+const current = (href: string) => (path === href ? 'page' : undefined);
+---
+<header class="site-header">
+  <div class="wrap bar">
+    <Logo />
+    <nav class="desktop" aria-label="Main">
+      <ul>
+        {nav.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="actions">
+      {site.phone && <a class="phone" href={telHref(site.phone)}>{site.phone}</a>}
+      <a class="btn btn--primary cta" href="/free-scan">Free Maps scan</a>
+    </div>
+    <details class="mobile">
+      <summary aria-label="Menu"><span class="burger" aria-hidden="true"></span><span class="label">Menu</span></summary>
+      <nav aria-label="Main (mobile)">
+        <ul>
+          {nav.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}
+          <li><a href="/free-scan">Free Google Maps scan</a></li>
+          <li><a href="/review-app">Free review app</a></li>
+          {site.phone && <li><a href={telHref(site.phone)}>Call {site.phone}</a></li>}
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 30;
+    background: rgb(247 243 234 / 96%);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: saturate(1.2) blur(6px);
+  }
+  .bar { display: flex; align-items: center; gap: 1rem; min-height: 4.25rem; }
+  .desktop { display: none; margin-left: auto; }
+  .desktop ul { display: flex; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
+  .desktop li + li { margin: 0; }
+  .desktop a, .mobile a { text-decoration: none; font-weight: 600; }
+  .desktop a:hover, .desktop a[aria-current] { text-decoration: underline; text-decoration-color: var(--brass); }
+  .actions { display: none; align-items: center; gap: 1rem; }
+  .phone { font-weight: 700; text-decoration: none; white-space: nowrap; }
+  .cta { min-height: 2.6rem; padding: 0.5rem 1.1rem; font-size: 0.95rem; }
+
+  .mobile { margin-left: auto; }
+  .mobile summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; gap: 0.5rem;
+    min-height: 2.75rem; padding: 0 0.8rem;
+    border: 1.5px solid var(--ink); border-radius: 999px; font-weight: 700;
+  }
+  .mobile summary::-webkit-details-marker { display: none; }
+  .burger, .burger::before, .burger::after {
+    display: block; width: 1.1rem; height: 2px; background: currentColor; position: relative;
+  }
+  .burger::before, .burger::after { content: ''; position: absolute; left: 0; }
+  .burger::before { top: -6px; }
+  .burger::after { top: 6px; }
+  .mobile[open] .burger { background: transparent; }
+  .mobile[open] .burger::before { top: 0; transform: rotate(45deg); }
+  .mobile[open] .burger::after { top: 0; transform: rotate(-45deg); }
+  .mobile nav {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--paper); border-bottom: 1px solid var(--line);
+    box-shadow: 0 12px 24px rgb(20 35 58 / 12%);
+  }
+  .mobile ul { list-style: none; margin: 0; padding: 0.5rem var(--gutter) 1rem; }
+  .mobile li + li { margin: 0; border-top: 1px solid var(--line); }
+  .mobile nav a { display: block; padding: 0.85rem 0; }
+
+  @media (min-width: 64rem) {
+    .desktop, .actions { display: flex; }
+    .mobile { display: none; }
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+import { type Plan, setupLabel, money } from '../lib/plans';
+interface Props { plan: Plan; ctaHref?: string }
+const { plan, ctaHref } = Astro.props;
+const href = plan.cta?.href ?? ctaHref ?? `/plans?plan=${plan.id}#start`;
+const label = plan.cta?.label ?? `Start with ${plan.short}`;
+---
+<article class:list={['plan card', { recommended: plan.recommended }]} aria-labelledby={`plan-${plan.id}`}>
+  {plan.recommended && <p class="badge">Recommended</p>}
+  <h3 id={`plan-${plan.id}`}>{plan.name}</h3>
+  <p class="tagline muted">{plan.tagline}</p>
+  <p class="price">
+    <span class="monthly">{plan.monthly === 0 ? '$0' : money(plan.monthly)}</span><span class="per">/mo</span>
+  </p>
+  <p class="meta">
+    {setupLabel(plan)}
+    {plan.annual && <><br />or {money(plan.annual)}/yr</>}
+    {plan.term && <><br /><strong>{plan.term}</strong></>}
+  </p>
+  <ul class="checks">
+    {plan.features.map((f) => <li>{f}</li>)}
+  </ul>
+  <a class:list={['btn', plan.recommended ? 'btn--primary' : 'btn--ghost']} href={href}>{label}</a>
+</article>
+
+<style>
+  .plan { display: flex; flex-direction: column; position: relative; }
+  .plan .checks { flex: 1; margin-bottom: 1.5rem; font-size: 0.98rem; }
+  .plan .btn { align-self: stretch; }
+  .recommended { border: 2px solid var(--brass); box-shadow: 0 10px 30px rgb(201 151 63 / 22%); }
+  .badge {
+    position: absolute; top: -0.85rem; left: 1.25rem; margin: 0;
+    background: var(--ink); color: var(--brass-light);
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem; border-radius: 999px;
+  }
+  .tagline { min-height: 3.2em; }
+  .price { margin: 0.25rem 0 0.25rem; font-family: var(--font-head); }
+  .monthly { font-size: 2.4rem; font-weight: 700; }
+  .per { font-size: 1.1rem; color: var(--ink-soft); }
+  .meta { font-size: 0.95rem; color: var(--ink-soft); border-bottom: 1px solid var(--line); padding-bottom: 1rem; }
+  .meta strong { color: var(--ink); }
+</style>

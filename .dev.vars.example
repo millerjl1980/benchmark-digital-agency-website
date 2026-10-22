@@ -1,0 +1,10 @@
+# Copy to .dev.vars for `bun run preview` (wrangler pages dev). Never commit .dev.vars.
+# For a fully local test, run `bun scripts/mock-services.ts` and keep these values.
+N8N_LEAD_WEBHOOK_URL=http://localhost:8799/test-webhook
+N8N_LEAD_WEBHOOK_SECRET=change-me
+# Cloudflare's always-pass test secret. Use the real secret in production.
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+# Local only: send siteverify to the mock. Remove to call Cloudflare directly.
+TURNSTILE_VERIFY_URL=http://localhost:8799/siteverify
+# Behind an HTTP proxy (wrangler's local runtime ignores HTTPS_PROXY), use the relay to hit Cloudflare's real check:
+# TURNSTILE_VERIFY_URL=http://localhost:8799/relay/siteverify

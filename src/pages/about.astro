@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../config/site';
+import { exclusivity } from '../lib/plans';
+---
+<Base
+  title="About Justin"
+  description="Benchmark Digital is run by Justin, a south-side Indianapolis local who helps small service businesses get found on Google Maps."
+>
+  <PageHero eyebrow="About" title={`Hi, I'm ${site.owner}.`} lead="Benchmark Digital is the local marketing shop I run for service businesses on the south side of Indianapolis." />
+
+  <section class="section">
+    <div class="wrap split about">
+      <!-- TODO(Justin): replace with a real photo. Use <Image> from astro:assets with width/height set. -->
+      <div class="placeholder photo" role="img" aria-label="Photo placeholder">
+        <div><strong>Placeholder</strong>Photo of Justin<br /><span class="small">Real, local photo. About 4:5, at least 800px wide.</span></div>
+      </div>
+      <div>
+        <!-- TODO(Justin): short bio, 2 to 3 short paragraphs. -->
+        <div class="placeholder bio">
+          <div>
+            <strong>Placeholder: short bio</strong>
+            Where you live, how long you've been on the south side, what you did before, and why you started Benchmark Digital.
+          </div>
+        </div>
+
+        <h2 class="h3">How I work</h2>
+        <ul class="checks">
+          <li>You deal with me, not a rotating account manager.</li>
+          <li>Plain reports. If something isn't working, I'll tell you.</li>
+          <li>No guaranteed rankings, because nobody can honestly promise them.</li>
+          <li>{exclusivity}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap narrow">
+      <p class="eyebrow">Why "Benchmark"</p>
+      <h2>A known reference point</h2>
+      <p>
+        Surveyors set small brass discs, called benchmarks, into concrete. Each one marks a point whose position is known exactly,
+        so everything nearby can be measured against it.
+      </p>
+      <p>That's the goal for every client: to be the business the rest of the local competition gets measured against.</p>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  .about { align-items: start; grid-template-columns: 1fr; }
+  @media (min-width: 56rem) { .about { grid-template-columns: 0.8fr 1.2fr; } }
+  .photo { aspect-ratio: 4 / 5; width: 100%; max-width: 26rem; }
+  .bio { min-height: 10rem; margin-bottom: 2rem; text-align: left; place-items: start; }
+  .h3 { font-size: 1.6rem; }
+</style>
